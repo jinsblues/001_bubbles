@@ -1,6 +1,6 @@
 {
-  "name": "유진이 앱",
-  "short_name": "유진이앱",
+  "name": "Bubbles",
+  "short_name": "Bubbles",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
