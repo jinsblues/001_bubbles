@@ -17,14 +17,14 @@ function createCircle(e) {
     touchCount++;
     touchCountElement.innerText = touchCount;
 
-    // 3. 햅틱 반응 (진동) 발생 (50ms 동안 짧게)
+    // 3. 햅틱 반응 (진동) 발생
     if (navigator.vibrate) {
         navigator.vibrate(50); 
     }
 
-    // 터치 좌표 가져오기
-    const x = e.touches ? e.touches.clientX : e.clientX;
-    const y = e.touches ? e.touches.clientY : e.clientY;
+    // [핵심 버그 수정 완료] e.touches 뒤에 첫 번째 터치()를 정확히 지정!
+    const x = (e.touches && e.touches.length > 0) ? e.touches.clientX : e.clientX;
+    const y = (e.touches && e.touches.length > 0) ? e.touches.clientY : e.clientY;
 
     const circle = document.createElement('div');
     circle.classList.add('circle');
@@ -42,12 +42,12 @@ function createCircle(e) {
 
     container.appendChild(circle);
 
-    // 애니메이션이 끝나면 요소 삭제
-    setTimeout(() => {
+    // 애니메이션이 완료된 후 잔상 없이 확실하게 요소 삭제
+    circle.addEventListener('animationend', () => {
         circle.remove();
-    }, 500);
+    });
 }
 
-// 터치 이벤트 등록 (click 대신 터치 반응이 더 빠른 mousedown 사용)
+// 터치 이벤트 등록
 container.addEventListener('touchstart', createCircle);
 container.addEventListener('mousedown', createCircle);
