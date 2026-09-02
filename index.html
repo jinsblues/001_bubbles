@@ -2,21 +2,27 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 아이가 터치해도 화면이 확대되지 않도록 고정 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- 사파리에서 보이는 이름 -->
-    <title>Bubbles for Eugene</title>
+    <!-- 사파리 탭에 표시되는 이름 -->
+    <title>유진이앱</title>
     <link rel="manifest" href="manifest.json">
     <!-- 아이폰 바탕화면 아이콘 설정 -->
     <link rel="apple-touch-icon" href="icon.png">
-    <!-- 아이폰 홈화면 추가 시 이름 강제 지정 -->
-     <meta name="apple-mobile-web-app-title" content="Bubbles">
+    <!-- 아이폰 홈 화면에 추가될 때 표시되는 이름 강제 지정 -->
+    <meta name="apple-mobile-web-app-title" content="유진이앱">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app-container">
         <!-- 터치할 때마다 여기에 동그라미가 생깁니다 -->
     </div>
+    
+    <!-- 하단 UI 정보창 (시간, 터치 횟수) -->
+    <div id="info-panel">
+        <div id="time-display">시간: <span id="time-count">0</span>초</div>
+        <div id="touch-display">터치: <span id="touch-count">0</span>번</div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
