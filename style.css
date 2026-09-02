@@ -49,7 +49,4 @@ body, html {
     font-weight: bold;
     color: #555;
     z-index: 10;
-    /* 글자 위를 터치해도 씹히지 않고 동그라미가 생기도록 터치 무시 처리 */
-    pointer-events: none; 
-    font-family: sans-serif;
 }

@@ -85,11 +85,6 @@ function createCircle(e) {
     circle.style.top = `${y}px`;
 
     container.appendChild(circle);
-
-    // 애니메이션이 완료된 후 잔상 없이 확실하게 요소 삭제
-    circle.addEventListener('animationend', () => {
-        circle.remove();
-    });
 }
 
 // 터치 이벤트 등록
