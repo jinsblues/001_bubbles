@@ -22,9 +22,9 @@ function createCircle(e) {
         navigator.vibrate(50); 
     }
 
-    // 터치 좌표 가져오기 (좌측 상단 고정 오류 수정 완료)
-    const x = e.touches ? e.touches.clientX : e.clientX;
-    const y = e.touches ? e.touches.clientY : e.clientY;
+    // [버그 수정 1] 터치 좌표 가져오기 (첫 번째 손가락의 위치를 정확히 가져옴)
+    const x = (e.touches && e.touches.length > 0) ? e.touches.clientX : e.clientX;
+    const y = (e.touches && e.touches.length > 0) ? e.touches.clientY : e.clientY;
 
     const circle = document.createElement('div');
     circle.classList.add('circle');
@@ -42,10 +42,10 @@ function createCircle(e) {
 
     container.appendChild(circle);
 
-    // 애니메이션이 끝나면 요소 삭제
-    setTimeout(() => {
+    // [버그 수정 2] 애니메이션이 완료된 후 잔상 없이 확실하게 요소 삭제
+    circle.addEventListener('animationend', () => {
         circle.remove();
-    }, 500);
+    });
 }
 
 // 터치 이벤트 등록 (click 대신 터치 반응이 더 빠른 mousedown 사용)
