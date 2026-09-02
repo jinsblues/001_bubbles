@@ -6,7 +6,7 @@ body, html {
     height: 100vh;
     background-color: #f0f8ff;
     
-    /* [완벽 해결 4] 뷰포트 overflow 영역 노출 완전 차단 및 고정 */
+    /* [핵심 해결] 뷰포트 밖(좌측 상단 모서리 등)에 걸치는 잔상 노출 완전 차단 및 고정 */
     overflow: hidden;
     position: fixed; 
     

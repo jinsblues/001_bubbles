@@ -1,11 +1,11 @@
-onst container = document.getElementById('app-container');
+const container = document.getElementById('app-container');
 const timeCountElement = document.getElementById('time-count');
 const touchCountElement = document.getElementById('touch-count');
 
 let touchCount = 0;
 let startTime = Date.now();
 
-// 1. 밀리초 단위 타이머 (00:00:00 포맷)
+// 1. 밀리초 단위 타이머
 function updateTime() {
     const elapsedTime = Date.now() - startTime;
     
@@ -57,12 +57,11 @@ function createCircle(e) {
 
     let x, y;
     
-    // [원인 해결] e.touches 뒤에 첫 번째 손가락을 뜻하는 을 정확히 추가했습니다!
+    // [치명적 버그 수정 완료!] e.touches로 명확하게 '첫 번째 터치 손가락' 좌표 지정
     if (e.touches && e.touches.length > 0) {
         x = e.touches.clientX;
         y = e.touches.clientY;
     } else {
-        // PC 마우스 클릭 대응
         x = e.clientX;
         y = e.clientY;
     }
@@ -75,7 +74,7 @@ function createCircle(e) {
     const size = Math.random() * 50 + 50; 
     const radius = size / 2; 
 
-    // [잔상 해결] 원이 화면 밖으로 나가지 않도록 반지름(radius)만큼 화면 안쪽에서만 생성되게 제한합니다.
+    // [좌표 범위 제한] 원이 화면 밖으로 넘어가서 잔상으로 굳지 않도록 반지름만큼 패딩 적용
     x = Math.max(radius, Math.min(x, window.innerWidth - radius));
     y = Math.max(radius, Math.min(y, window.innerHeight - radius));
 
@@ -87,7 +86,7 @@ function createCircle(e) {
 
     container.appendChild(circle);
 
-    // 애니메이션 완료 후 객체를 확실하게 제거하여 잔상을 방지합니다.
+    // [잔상 완전 방지] 애니메이션 종료 후 DOM에서 객체 확실하게 제거
     circle.addEventListener('animationend', () => {
         circle.remove();
     });
