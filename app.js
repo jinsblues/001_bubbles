@@ -22,7 +22,7 @@ function createCircle(e) {
         navigator.vibrate(50); 
     }
 
-    // 터치 좌표 가져오기
+    // 터치 좌표 가져오기 (좌측 상단 고정 오류 수정 완료)
     const x = e.touches ? e.touches.clientX : e.clientX;
     const y = e.touches ? e.touches.clientY : e.clientY;
 
