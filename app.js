@@ -1,4 +1,4 @@
-const container = document.getElementById('app-container');
+onst container = document.getElementById('app-container');
 const timeCountElement = document.getElementById('time-count');
 const touchCountElement = document.getElementById('touch-count');
 
@@ -57,7 +57,7 @@ function createCircle(e) {
 
     let x, y;
     
-    // [치명적 버그 수정 완료] e.touches 배열의 첫 번째 요소를 의미하는 을 정확히 지정했습니다.
+    // [원인 해결] e.touches 뒤에 첫 번째 손가락을 뜻하는 을 정확히 추가했습니다!
     if (e.touches && e.touches.length > 0) {
         x = e.touches.clientX;
         y = e.touches.clientY;
@@ -75,7 +75,7 @@ function createCircle(e) {
     const size = Math.random() * 50 + 50; 
     const radius = size / 2; 
 
-    // 원이 화면 밖으로 넘어가 좌측 상단 등에 잔상으로 걸리지 않게 좌표 범위 제한 [1]
+    // [잔상 해결] 원이 화면 밖으로 나가지 않도록 반지름(radius)만큼 화면 안쪽에서만 생성되게 제한합니다.
     x = Math.max(radius, Math.min(x, window.innerWidth - radius));
     y = Math.max(radius, Math.min(y, window.innerHeight - radius));
 
@@ -87,7 +87,7 @@ function createCircle(e) {
 
     container.appendChild(circle);
 
-    // 애니메이션 완료 후 잔상 없이 확실하게 요소 제거 [1]
+    // 애니메이션 완료 후 객체를 확실하게 제거하여 잔상을 방지합니다.
     circle.addEventListener('animationend', () => {
         circle.remove();
     });
