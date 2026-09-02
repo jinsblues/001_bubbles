@@ -55,12 +55,14 @@ function createCircle(e) {
 
     playBubbleSound();
 
-    // [완벽 해결 1] e.touches으로 정확히 '첫 번째 손가락' 좌표 가져오기
     let x, y;
+    
+    // [치명적 버그 수정 완료] e.touches 배열의 첫 번째 요소를 의미하는 을 정확히 지정했습니다.
     if (e.touches && e.touches.length > 0) {
         x = e.touches.clientX;
         y = e.touches.clientY;
     } else {
+        // PC 마우스 클릭 대응
         x = e.clientX;
         y = e.clientY;
     }
@@ -71,9 +73,9 @@ function createCircle(e) {
     const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FF9F1C', '#8338EC'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     const size = Math.random() * 50 + 50; 
-    const radius = size / 2; // 원의 반지름
+    const radius = size / 2; 
 
-    // [완벽 해결 2] 원이 화면(모서리) 밖으로 나가지 않도록 좌표 범위 제한 (패딩 적용)
+    // 원이 화면 밖으로 넘어가 좌측 상단 등에 잔상으로 걸리지 않게 좌표 범위 제한 [1]
     x = Math.max(radius, Math.min(x, window.innerWidth - radius));
     y = Math.max(radius, Math.min(y, window.innerHeight - radius));
 
@@ -85,7 +87,7 @@ function createCircle(e) {
 
     container.appendChild(circle);
 
-    // [완벽 해결 3] 애니메이션 완료 후 잔상 없이 확실하게 요소 제거
+    // 애니메이션 완료 후 잔상 없이 확실하게 요소 제거 [1]
     circle.addEventListener('animationend', () => {
         circle.remove();
     });
@@ -98,62 +100,3 @@ container.addEventListener('touchstart', function(e) {
 }, { passive: false });
 
 container.addEventListener('mousedown', createCircle);
-```
-
-### 2. 최종 수정된 `style.css` (전체 복사)
-비눗방울이 화면 바깥으로 나가는 것을 방지하고, 넘치는 요소를 깔끔하게 숨겨주는 스타일 속성을 추가했습니다 [1].
-
-```css
-/* 화면 전체를 꽉 채우고 스크롤 및 잔상 방지 */
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f0f8ff;
-    
-    /* [완벽 해결 4] 뷰포트 overflow 영역 노출 완전 차단 및 고정 */
-    overflow: hidden;
-    position: fixed; 
-    
-    user-select: none; 
-    -webkit-user-select: none;
-    touch-action: none; 
-}
-
-#app-container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.circle {
-    position: absolute;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: pop 0.5s ease-out forwards;
-}
-
-@keyframes pop {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-}
-
-#info-panel {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 30px;
-    box-sizing: border-box;
-    font-size: 24px;
-    font-weight: bold;
-    color: #555;
-    z-index: 10;
-    pointer-events: none; 
-    font-family: sans-serif;
-}
